@@ -1,0 +1,91 @@
+﻿@page "/"
+@using VacunateRD__BD1_Final_.Data
+@inject DBServices objDBServices
+@inject NavigationManager NavigationManager
+
+
+<h1><strong>Vacunar</strong></h1>
+<h2>Buscar vacunado</h2>
+<div class="form-group">
+    <label for="Name" class="control-label">Identificación</label>
+    <input for="Name" class="form-control" @bind="@identificacion1" />
+</div>
+
+<input type="button" class="btn btn-primary" @onclick="@BuscarPorId" value="Buscar" />
+
+@if (PersonaHistorial == null)
+{
+    <p><em>Esperando búsqueda</em></p>
+}
+else
+{
+
+    <table class="table">
+        <h2>Vacunar</h2>
+        <thead>
+            <tr>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Profesión</th>
+                <th>Edad</th>
+                <th>Fase</th>
+                <th>Centro</th>
+                <th>Número de Mesa</th>
+                <th>Dosis Correspondiente</th>
+                <th>Fecha</th>
+                <th>Lote</th>
+                <th>Vacuna</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var temp in PersonaHistorial)
+            {
+                <tr>
+                    <td>@temp.Nombres</td>
+                    <td>@temp.Apelllidos</td>
+                    <td>@temp.Profesion</td>
+                    <td>@temp.Edad</td>
+                    <td>@temp.CodigoFase</td>
+                    <td>@temp.Centro</td>
+                    <td>@temp.NumMesa</td>
+                    <td>@temp.DosisCorrespondiente</td>
+                    <td>@temp.Fechaproporcionada</td>
+                    <td>@temp.IdLote</td>
+                    <td>@temp.NombreVacuna</td>
+                    <td>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (idPersona1 != 0)
+{
+    <CascadingValue Value="@idPersona1"><VacunacionPage></VacunacionPage></CascadingValue>
+}
+
+
+
+@code {
+    List<PersonaVacunacion> PersonaHistorial;
+    public string identificacion1 { get; set; }
+    public int idPersona1 { get; set; } = 0;
+
+    protected void BuscarPorId()
+    {
+        if (identificacion1 != null)
+        {
+            DBServices db = new DBServices();
+            PersonaHistorial = db.GetPersonaDataByIdentificacion(identificacion1).ToList();
+            idPersona1 = db.getIdPersonaByIdentificacion(identificacion1);
+        }
+    }
+
+
+    /*
+protected override async Task OnInitializedAsync()
+{
+    DBServices db = new DBServices();
+    PersonaHistorial = await Task.Run(() => db.GetPersonaDataByIdentificacion(identificacion1));
+}*/
+}

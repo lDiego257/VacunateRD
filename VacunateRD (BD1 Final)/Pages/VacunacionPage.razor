@@ -1,0 +1,104 @@
+﻿@page "/Vacunacion"
+@using VacunateRD__BD1_Final_.Data
+@inject DBServices objDBServices
+@inject NavigationManager NavigationManager
+@inject ToShare ToShare
+
+
+<h3><strong>Vacunación</strong></h3>
+
+<div class="form-group">
+
+    <label class="control-label">Lote</label>
+    <select class="form-control" @bind="@objVacunacion.idLote">
+        <option value="">-- Lote --</option>
+        @foreach (var l in Lotes)
+        {
+            <option value="@l.idLote">Codigo: @l.idLote | @l.Nombre | @l.Disponibles</option>
+        }
+    </select>
+
+
+    <label asp-for="Mesa-Vacunacion" class="control-label">Mesa de vacunación</label>
+    <select class="form-control" @bind="@objVacunacion.idMesaVacunacion">
+        <option value="">-- Mesa --</option>
+        @foreach (var M in Mesas)
+        {
+            <option value="@M.idMesaVacunacion">Codigo: @M.idMesaVacunacion</option>
+        }
+    </select>
+
+    <label asp-for="Vacunador" class="control-label">Vacunador</label>
+    <select class="form-control" @bind="@objVacunacion.idVacuandor">
+        <option value="">-- Vacunador --</option>
+        @foreach (var item in Vacunadores)
+        {
+            <option value="@item.IdVacunador">@item.Nombres @item.Apellidos</option>
+        }
+    </select>
+
+    <div class="form-group">
+        <label for="Dosis" class="control-label">Dosis correspondiente</label>
+        <select @bind="@objVacunacion.Dosis" class="form-control">
+            <option value="1">Primera</option>
+            <option value="2">Segunda</option>
+            <option value="3">Tercera</option>
+            <option value="4">Cuarta</option>
+        </select>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@btnVacunar" value="Agregar" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancelar" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+        List<Vacunador> Vacunadores = new List<Vacunador>();
+        List<Lote> Lotes = new List<Lote>();
+        List<MesaVacunacion> Mesas = new List<MesaVacunacion>();
+        Vacunacion objVacunacion = new Vacunacion();
+        DBServices db1 = new DBServices();
+        List<CentroVacunacion> centros = new List<CentroVacunacion>();
+
+    public int idCentro { get; set; } = 0;
+
+
+    [CascadingParameter]
+    public int idPersona { get; set; }
+    /*
+    public async Task Iniciar()
+            {
+                DBServices db = new DBServices();
+                //objVacunacion.idPersona = idPersona;
+                Vacunadores = await Task.Run(() => db.GetVacunadoresById(idCentro));
+                Lotes = await Task.Run(() => db.getLotesByCentroId(idCentro));
+                Mesas = await Task.Run(() => db.getMesasByCentroId(idCentro));
+            }*/
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        DBServices db = new DBServices();
+        centros = await Task.Run(() => db.getAllCentros());
+        objVacunacion.idPersona = idPersona;
+        Vacunadores = await Task.Run(() => db.GetVacunadoresById(ToShare.IdHospital));
+        Lotes = await Task.Run(() => db.getLotesByCentroId(ToShare.IdHospital));
+        Mesas = await Task.Run(() => db.getMesasByCentroId(ToShare.IdHospital));
+    }
+
+    protected void btnVacunar()
+    {
+        objDBServices.addVacunacion(objVacunacion);
+        NavigationManager.NavigateTo("/SelecionarHospital");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/SelecionarHospital");
+    }
+}

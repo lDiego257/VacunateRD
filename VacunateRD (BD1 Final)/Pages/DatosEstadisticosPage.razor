@@ -1,0 +1,107 @@
+﻿@page "/DatosEstadisticos"
+
+<h1><strong>Progreso</strong></h1>
+<br />
+@if (stast != null)
+{
+    <div>
+        <h2>Vacunas disponibles en central: @stast.VacunasDisponiblesCentral</h2>
+    </div>
+    <br />
+    <div>
+        <h2>Vacunados por región</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Región</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in stast.VacunadosPorRegion)
+                {
+                    <tr>
+                        <td>@item.NombreArea</td>
+                        <td>@item.CantidadArea</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div>
+        <h2>Vacunados por provincia</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Provincia</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in stast.VacunadosPorProvincia)
+                {
+                    <tr>
+                        <td>@item.NombreArea</td>
+                        <td>@item.CantidadArea</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div>
+        <h2>Vacunados por municipio</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Municipio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in stast.VacunadosPorMunicipio)
+                {
+                    <tr>
+                        <td>@item.NombreArea</td>
+                        <td>@item.CantidadArea</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div>
+        <h2>Vacunas disponibles por región</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Región</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in stast.VacunasDisponiblesPorRegion)
+                {
+                    <tr>
+                        <td>@item.Region</td>
+                        <td>@item.Cantidad</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p><em>Cargando...</em></p>
+}
+
+@code {
+    private DatosEstadisticos stast;
+    protected override void OnInitialized()
+    {
+        DBServices db = new DBServices();
+        stast = db.GetDatosEstadisticos();
+    }
+}

@@ -1,0 +1,49 @@
+﻿@layout BlankLayout
+@page "/SelecionarHospital"
+@inject NavigationManager NavigationManager
+@inject ToShare ToShare
+
+
+<div class="centered" style="background: #c4bcbc;">
+    <h2 class="center-text">Selección de centro de vacunación</h2>
+    <br />
+    <label for="centros" class="control-label center-text centered">Seleccione un centro: </label>
+    <select name="centros" class="center-text centered" @bind="@ToShare.IdHospital">
+        @foreach (var item in centrosVacunacion)
+        {
+            <option value="@item.idCentroVacunacion">@item.Nombre</option>
+        }
+    </select>
+    <br />
+    <br />
+    <button class="btn btn-primary center-text centered" @onclick="ToIndex">Continuar</button>
+</div>
+
+
+@code{
+    private List<CentroVacunacion> centrosVacunacion = new List<CentroVacunacion>();
+    protected override void OnInitialized()
+    {
+        if (ToShare.IdHospital != -1)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            DBServices db = new DBServices();
+            centrosVacunacion = db.getAllCentros();
+        }
+    }
+    private void ToIndex() => NavigationManager.NavigateTo("/");
+}
+
+<style>
+    .centered {
+        margin: 0 auto;
+        padding: 5px 5px 5px 5px;
+    }
+
+    .center-text{
+        text-align:center;
+    }
+</style>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacunateRD (BD1 Final)", "VacunateRD (BD1 Final).csproj", "{AD6AA27E-3C57-4B3F-AD15-4D7D04CF215F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD6AA27E-3C57-4B3F-AD15-4D7D04CF215F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD6AA27E-3C57-4B3F-AD15-4D7D04CF215F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD6AA27E-3C57-4B3F-AD15-4D7D04CF215F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD6AA27E-3C57-4B3F-AD15-4D7D04CF215F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1F84F9D-4E09-4131-B7ED-98F9278114A2}
+	EndGlobalSection
+EndGlobal

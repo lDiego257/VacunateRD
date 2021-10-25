@@ -1,0 +1,50 @@
+﻿@inject ToShare ToShare
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">VacunateRD</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="AgregarPersona">
+                <span class="oi oi-person" aria-hidden="true"></span> Agregar persona
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-plus" aria-hidden="true"></span> Vacunación
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="DatosEstadisticos">
+                <span class="oi oi-bar-chart" aria-hidden="true"></span> Progreso
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="SelecionarHospital" @onclick="@btnCerrarSesion">
+                <span class="oi oi-action-undo" aria-hidden="true"></span> Cerrar Sesion
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected void btnCerrarSesion()
+    {
+
+        ToShare.IdHospital = -1;
+    }
+}

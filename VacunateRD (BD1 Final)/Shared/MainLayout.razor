@@ -1,0 +1,31 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject ToShare ToShare
+
+@if (ToShare.IdHospital != -1)
+{
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <div class="main">
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank"></a>
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+}
+
+@code{
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (ToShare.IdHospital == -1)
+        {
+            NavigationManager.NavigateTo("/SelecionarHospital");
+        }
+    }
+}

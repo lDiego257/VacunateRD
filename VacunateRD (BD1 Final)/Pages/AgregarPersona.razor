@@ -1,0 +1,71 @@
+﻿@page "/AgregarPersona"
+@using VacunateRD__BD1_Final_.Data
+@inject DBServices objDBServices
+@inject NavigationManager NavigationManager
+
+<h1><strong>Agregar persona</strong></h1>
+
+<hr />
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Nombres" class="control-label">Nombres</label>
+                <input for="Nombres" class="form-control" @bind="@p.nombres" />
+            </div>
+            <div class="form-group">
+                <label for="Apellidos" class="control-label">Apellidos</label>
+                <input for="Apellidos" class="form-control" @bind="@p.apellidos" />
+            </div>
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase" class="control-label">Tipo de identificación</label>
+                <select @bind="@p.idTipoIdentificacion" class="form-control">
+                    <option value="1">Cédula</option>
+                    <option value="2">Pasaporte</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Identificacion" class="control-label">Identificación</label>
+                <input for="Identificacion" type="number" min="0" step="1" maxlength="15" class="form-control" @bind="@p.identificacion" />
+            </div>
+            <div class="form-group">
+                <label for="Profesion" class="control-label">Profesión</label>
+                <select @bind="@p.idProfesion" class="form-control">
+                    <option value="4">Ninguna</option>
+                    <option value="1">Docente</option>
+                    <option value="2">Personal Salud</option>
+                    <option value="3">Personal Hogar Adultos Mayores</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="FechaNacimiento" class="control-label">Fecha de nacimiento</label>
+                <input for="FechaNacimiento" type="date" class="form-control" @bind="@p.FechaNacimiento" />
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreatePersona" value="Agregar" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancelar" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@code {
+    Persona p = new Persona();
+    protected void CreatePersona()
+    {
+        objDBServices.Create(p);
+        NavigationManager.NavigateTo("/");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
